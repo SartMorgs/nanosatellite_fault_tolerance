@@ -1,0 +1,89 @@
+library IEEE;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity tb_ROUTER is
+end tb_ROUTER;
+
+architecture Behavior of tb_ROUTER is
+
+	signal w_DATA		: STD_LOGIC;
+	signal w_i_DATA	: STD_LOGIC_VECTOR((p_w_SIZE-1) DOWNTO 0);
+	signal w_CLK		: STD_LOGIC;
+	signal w_RST		: STD_LOGIC;
+	signal w_FS			: STD_LOGIC;
+	signal w_WR			: STD_LOGIC;
+	signal w_o_DATA	: STD_LOGIC_VECTOR((p_w_SIZE-1) DOWNTO 0);
+
+	component ROUTER is
+		Generic(
+			p_w_SIZE : integer := 16;
+			p_b_SIZE	: integer := 10
+		)
+		Port(
+			DATA		: inout STD_LOGIC;
+			i_DATA	: in STD_LOGIC_VECTOR((p_w_SIZE-1) DOWNTO 0);
+			i_CLK		: in STD_LOGIC;
+			i_RST		: in STD_LOGIC;
+			i_FS		: in STD_LOGIC;
+			i_WR		: in STD_LOGIC;
+			o_DATA	: out STD_LOGIC_VECTOR((p_w_SIZE-1) DOWNTO 0)
+		);
+	end component;
+
+begin
+
+	R	: ROUTER
+	Generic Map(
+		p_w_SIZE	=> 16,
+		p_b_SIZE	=> 10
+	);
+	Port Map(
+		DATA		=> w_DATA,	
+		i_DATA	=> w_i_DATA,
+		i_CLK		=> w_CLK,
+		i_RST		=> w_RST,
+		i_FS		=> w_FS,
+		i_WR		=> w_WR,
+		o_DATA	=> w_o_DATA,
+	);
+
+	
+	process
+	begin
+		w_CLK	<= '0';
+		wait for 500 ns;
+		w_CLK	<= '1';
+		wait for 500 ns;
+	end process
+	
+	process
+	begin
+		wait for 1000 ns;
+		w_RST	<= '0';
+		wait for 500 ns;
+		
+		w_i_DATA	<= x"0123";
+		wait for 100 ns;
+		w_i_DATA	<= (others => 'Z');
+		wait for 100 ns;
+		
+		w_i_DATA	<= x"3210";
+		wait for 100 ns;
+		w_i_DATA	<= (others => 'Z');
+		wait for 100 ns;
+		
+		w_i_DATA	<= x"4567";
+		wait for 100 ns;
+		w_i_DATA	<= (others => 'Z');
+		wait for 100 ns;
+		
+		w_i_DATA	<= x"7654";
+		wait for 100 ns;
+		w_i_DATA	<= (others => 'Z');
+		wait for 100 ns;
+		wait;
+	end proces;
+
+end Behavior;

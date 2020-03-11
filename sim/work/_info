@@ -1,0 +1,161 @@
+m255
+K3
+13
+cModel Technology
+dC:\altera\13.1\projects\NETWORK
+Edecode_channel
+Z0 w1556169505
+Z1 DPx4 ieee 18 std_logic_unsigned 0 22 RYmj;=TK`k=k>D@Cz`zoB3
+Z2 DPx3 std 6 textio 0 22 5>J:;AW>W0[[dW0I6EN1Q0
+Z3 DPx4 ieee 14 std_logic_1164 0 22 5=aWaoGZSMWIcH0i^f`XF1
+Z4 DPx4 ieee 15 std_logic_arith 0 22 4`Y?g_lkdn;7UL9IiJck01
+Z5 dC:\altera\13.1\projects\NETWORK\sim
+Z6 8C:/altera/13.1/projects/NETWORK/DECODE_CHANNEL.vhd
+Z7 FC:/altera/13.1/projects/NETWORK/DECODE_CHANNEL.vhd
+l0
+L6
+VWVVRA=@GCC6=g?5Fj0gJ:0
+Z8 OV;C;10.1d;51
+32
+Z9 !s108 1556169510.614000
+Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|C:/altera/13.1/projects/NETWORK/DECODE_CHANNEL.vhd|
+Z11 !s107 C:/altera/13.1/projects/NETWORK/DECODE_CHANNEL.vhd|
+Z12 o-work work -2002 -explicit -O0
+Z13 tExplicit 1
+!s100 f>dR6zVQP:@;l^[@B05z43
+!i10b 1
+Adc
+R1
+R2
+R3
+R4
+DEx4 work 14 decode_channel 0 22 WVVRA=@GCC6=g?5Fj0gJ:0
+l28
+L24
+V__;7g8UFn153ND?XNk`Eb0
+R8
+32
+R9
+R10
+R11
+R12
+R13
+!s100 EhT98U:HfP>^=Pncf5UeD1
+!i10b 1
+Eframe_sync
+Z14 w1556170772
+R1
+R2
+R3
+R4
+R5
+Z15 8C:/altera/13.1/projects/NETWORK/FRAME_SYNC.vhd
+Z16 FC:/altera/13.1/projects/NETWORK/FRAME_SYNC.vhd
+l0
+L6
+VOJXIl8lc8@3]ne1A1^BRa0
+R8
+32
+Z17 !s108 1556170780.234000
+Z18 !s90 -reportprogress|300|-work|work|-2002|-explicit|C:/altera/13.1/projects/NETWORK/FRAME_SYNC.vhd|
+Z19 !s107 C:/altera/13.1/projects/NETWORK/FRAME_SYNC.vhd|
+R12
+R13
+!s100 ZfYG600=gk7I7<[lHNZ4l1
+!i10b 1
+Afs
+R1
+R2
+R3
+R4
+DEx4 work 10 frame_sync 0 22 OJXIl8lc8@3]ne1A1^BRa0
+l20
+L18
+VQklmzeYiELY=3OaaegDd51
+R8
+32
+R17
+R18
+R19
+R12
+R13
+!s100 3GgLRRGLSCZb;h?gAU0Pm2
+!i10b 1
+Etb_decode_channel
+Z20 w1556169463
+R1
+R2
+R3
+R4
+R5
+Z21 8C:/altera/13.1/projects/NETWORK/tb_DECODE_CHANNEL.vhd
+Z22 FC:/altera/13.1/projects/NETWORK/tb_DECODE_CHANNEL.vhd
+l0
+L6
+Vj3k^2DIh8RX189BHHK2l_1
+R8
+32
+Z23 !s108 1556169510.918000
+Z24 !s90 -reportprogress|300|-work|work|-2002|-explicit|C:/altera/13.1/projects/NETWORK/tb_DECODE_CHANNEL.vhd|
+Z25 !s107 C:/altera/13.1/projects/NETWORK/tb_DECODE_CHANNEL.vhd|
+R12
+R13
+!s100 fcPnG4n[47]geLDVQbI>31
+!i10b 1
+Abehavior
+R1
+R2
+R3
+R4
+DEx4 work 17 tb_decode_channel 0 22 j3k^2DIh8RX189BHHK2l_1
+l38
+L10
+VT0QhC<QE`bUWAS5jXM;9C3
+R8
+32
+R23
+R24
+R25
+R12
+R13
+!s100 CN]j2Az<^oN0FkKHMUHQ^1
+!i10b 1
+Etb_frame_sync
+Z26 w1556170433
+R1
+R2
+R3
+R4
+R5
+Z27 8C:/altera/13.1/projects/NETWORK/tb_FRAME_SYNC.vhd
+Z28 FC:/altera/13.1/projects/NETWORK/tb_FRAME_SYNC.vhd
+l0
+L6
+ValVVGo<Lm079Oz8W>8ziP3
+!s100 QeVGZfaRiH3d6:EXzB4S^2
+R8
+32
+!i10b 1
+Z29 !s108 1556170780.656000
+Z30 !s90 -reportprogress|300|-work|work|-2002|-explicit|C:/altera/13.1/projects/NETWORK/tb_FRAME_SYNC.vhd|
+Z31 !s107 C:/altera/13.1/projects/NETWORK/tb_FRAME_SYNC.vhd|
+R12
+R13
+Abehavior
+R1
+R2
+R3
+R4
+Z32 DEx4 work 13 tb_frame_sync 0 22 alVVGo<Lm079Oz8W>8ziP3
+l27
+L9
+Z33 VCPen@@I_g[ERecJg>DKcn0
+Z34 !s100 SR2mJE=WXYZ]c5Dn5kgzi3
+R8
+32
+!i10b 1
+R29
+R30
+R31
+R12
+R13

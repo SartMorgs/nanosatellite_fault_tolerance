@@ -1,0 +1,148 @@
+library IEEE;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity CROSSBAR is
+	Generic(
+		N_BITS	: integer := 16;
+	)
+	Port(
+		i_R1		: inout STD_LOGIC;
+		i_R2		: inout STD_LOGIC;
+		i_R3		: inout STD_LOGIC;
+		i_R4		: inout STD_LOGIC;
+		i_FS		: in STD_LOGIC;
+		i_CLK		: in STD_LOGIC;
+		i_RST		: in STD_LOGIC;
+		i_WR_R1	: in STD_LOGIC;
+		i_WR_R2	: in STD_LOGIC;
+		i_WR_R3	: in STD_LOGIC;
+		i_WR_R4	: in STD_LOGIC
+	);
+end CROSSBAR;
+
+architecture crb of CROSSBAR is
+
+	component S2P is
+		Generic(
+			N_BITS	: integer := 16
+		)
+		Port(
+			i_DATA	: in STD_LOGIC;
+			i_CLK		: in STD_LOGIC;
+			i_EN		: in STD_LOGIC;
+			o_DATA	: OUT STD_LOGIC_VECTOR((N_BITS-1) DOWNTO 0)
+		);
+	end component;
+	
+	component P2S is
+		Generic(
+			N_BITS	: integer := 16;
+		)
+		Port(
+			i_DATA		: in STD_LOGIC_VECTOR((N_BITS-1) DOWNTO 0);
+			i_ND_OUT		: in STD_LOGIC;
+			i_CLK			: in STD_LOGIC;
+			i_EN			: in STD_LOGIC;
+			i_RST			: in STD_LOGIC;
+			o_DATA		: out STD_LOGIC
+		end component;
+
+	Type w_State_Type is (st_NCHAVE, st_CHAVE);
+	attribute syn_encoding: string;
+	attribute syn_encoding of w_State_Type	: type is "safe";
+	signal w_STATE	: w_State_Type;
+	
+	
+	signal w_IN			: STD_LOGIC;
+	signal w_OUT		: STD_LOGIC;
+	
+--------------------------------------- CHANNEL --------------------------------------------
+	signal w_CR			: STD_LOGIC_VECTOR(3 DOWNTO 0);
+	signal w_CR1		: STD_LOGIC_VECTOR(3 DOWNTO 0);
+	signal w_CR2		: STD_LOGIC_VECTOR(3 DOWNTO 0);
+	signal w_CR3		: STD_LOGIC_VECTOR(3 DOWNTO 0);
+	signal w_CR4		: STD_LOGIC_VECTOR(3 DOWNTO 0);
+	
+--------------------------------------- BUFFER --------------------------------------------
+	signal w_BUFFER_IN	: STD_LOGIC_VECTOR((N_BITS-1) DOWNTO 0);
+	signal w_BUFFER_OUT	: STD_LOGIC_VECTOR((N_BITS-1) DOWNTO 0);	
+	signal w_BUFFER1		: STD_LOGIC_VECTOR((N_BITS-1) DOWNTO 0);
+	signal w_BUFFER2		: STD_LOGIC_VECTOR((N_BITS-1) DOWNTO 0);
+	signal w_BUFFER3		: STD_LOGIC_VECTOR((N_BITS-1) DOWNTO 0);
+	signal w_BUFFER4		: STD_LOGIC_VECTOR((N_BITS-1) DOWNTO 0);
+	
+begin
+
+	STP: S2P
+	Generic Map(
+		N_BITS	<= N_BITS
+	)
+	Port Map(
+		i_DATA	=> w_IN,
+		i_CLK		=> i_CLK,
+		i_EN		=> not i_FS,
+		o_DATA	=>	w_BUFFER
+	)
+
+	PTS: P2S
+	Generic Map(
+		N_BITS	<= N_BITS
+	)
+	Port Map(
+		i_DATA	=> w_BUFFER_OUT,
+		i_ND_OUT	=> ,
+		i_CLK		=> i_CLK,
+		i_EN		=> ,
+		i_RST		=> i_RST,
+		o_DATA	=> w_OUT
+	)
+	
+	
+	w_IN			<= i_R1 when(i_WR_R1 = '1')
+						i_R2 when(i_WR_R2	= '1')
+						i_R3 when(i_WR_R3 = '1')
+						i_R4 when(i_WR_R4 = '1')
+						else 'Z';
+				
+	w_BUFFER1 	<= w_BUFFER_IN when(i_WR_R1 = '1');
+	w_BUFFER2 	<= w_BUFFER_IN when(i_WR_R2 = '1');
+	w_BUFFER3 	<= w_BUFFER_IN when(i_WR_R3 = '1');
+	w_BUFFER4 	<= w_BUFFER_IN when(i_WR_R4 = '1');
+	
+	w_CR1			<= w_CR when (i_WR_R1 = '1');
+	w_CR2			<= w_CR when (i_WR_R2 = '1');
+	w_CR3			<= w_CR when (i_WR_R3 = '1');
+	w_CR4			<= w_CR when (i_WR_R4 = '1');
+	
+	U_MACHINE: process(i_CLK, i_RST)
+	begin
+		if(i_RST = '0') then
+			w_IN		<= 'Z';
+			w_OUT		<=	'Z';
+			w_CR1		<= "0ZZ";
+			w_CR2		<= "0ZZ";
+			w_CR3		<= "0ZZ";
+			w_CR4		<= "0ZZ";
+			w_STATE	<= st_NCHAVE;
+		elsif rising_edge(i_CLK) then
+			case w_STATE is
+			
+				-- SEM CIRCUITO CHAVEADO --
+				when st_NCHAVE	=>
+					if(w_BUFFER_IN((N_BITS-1) DOWNTO (N_BITS-9)) = x"FF") then
+						w_BUFFER_OUT <= w_BUFFER_IN;
+						w_CR			<= '1' & w_BUFFER_IN((N_BITS-10) DOWNTO (N_BITS-11));
+						w_STATE		<= st_CHAVE;
+					else
+						w_STATE		<= st_NCHAVE;
+				
+				
+				-- COM CIRCUITO CHAVEADO
+				when st_CHAVE	=>
+					if()
+		end if;
+	end U_MACHINEA;
+
+end crb;

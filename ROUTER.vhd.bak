@@ -1,0 +1,121 @@
+library IEEE;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity ROUTER is
+	Generic(
+		N_BITS 	: integer := 16;
+		N_SLOTS	: integer := 10
+	)
+	Port(
+		DATA		: inout STD_LOGIC;
+		i_DATA	: in STD_LOGIC_VECTOR((N_BITS-1) DOWNTO 0);
+		i_CLK		: in STD_LOGIC;
+		i_RST		: in STD_LOGIC;
+		i_FS		: in STD_LOGIC;
+		i_WR		: in STD_LOGIC;
+		o_DATA	: out STD_LOGIC_VECTOR((N_BITS-1) DOWNTO 0)
+	);
+end ROUTER;
+
+architecture rt of ROUTER is
+
+	component P2S is
+		Generic(
+			N_BITS	: integer := 16;
+		)
+		Port(
+			i_DATA		: in STD_LOGIC_VECTOR((N_BITS-1) DOWNTO 0);
+			i_ND_OUT		: in STD_LOGIC;
+			i_CLK			: in STD_LOGIC;
+			i_EN			: in STD_LOGIC;
+			i_RST			: in STD_LOGIC;
+			o_DATA		: out STD_LOGIC
+		);
+	end component;
+	
+	component S2P is
+		Generic(
+			N_BITS	: integer := 16;
+		)
+		Port(
+			i_DATA	: in STD_LOGIC;
+			i_CLK		: in STD_LOGIC;
+			i_EN		: in STD_LOGIC;
+			o_DATA	: OUT STD_LOGIC_VECTOR((N_BITS-1) DOWNTO 0)
+		);
+	end component;
+
+	type buffer_type is array (0 to (N_SLOTS-1) of STD_LOGIC_VECTOR((N_BITS-1) DONWTO 0));
+	signal w_BUFFER	: buffer_type;
+	signal w_C_READ	: integer range 0 to 9 := 0;
+	signal w_C_WRITE	: integer range 0 to 9 := 0;
+	
+	signal w_o_DATA	: STD_LOGIC_VECTOR((N_BITS-1) DOWNTO 0);
+	signal w_ND_OUT	: STD_LOGIC;
+	signal w_DO			: STD_LOGIC;
+	
+begin
+
+	DATA	<= w_DO when(i_WR = '1') else 'Z';
+
+	process(i_CLK, i_RST)
+	begin
+		if(i_RST = '0') then
+			w_BUFFER(0) <= (OTHERS => '0');
+			w_BUFFER(1) <= (OTHERS => '0');
+			w_BUFFER(2) <= (OTHERS => '0');
+			w_BUFFER(3) <= (OTHERS => '0');
+			w_BUFFER(4) <= (OTHERS => '0');
+			w_BUFFER(5) <= (OTHERS => '0');
+			w_BUFFER(6) <= (OTHERS => '0');
+			w_BUFFER(7) <= (OTHERS => '0');
+			w_BUFFER(8) <= (OTHERS => '0');
+			w_BUFFER(9) <= (OTHERS => '0');
+			w_C_READ		:= 0;
+			w_C_WRITE	:= 0;
+		elsif falling_edge(i_CLK) then
+			if(i_DATA /= 'Z') then	-- SE HOUVER NOVOS DADOS VINDO DO PROCESSADOR
+				if(w_BUFFER(w_C_WRITE) /= 'Z')
+					w_BUFFER(w_C_WRITE) <= i_DATA;
+					w_C_WRITE	:= w_C_WRITE + 1;
+		end if;
+	end process;
+	
+	process(i_CLK)
+	begin
+		if rising_edge(i_CLK) then
+			if(w_BUFFER(w_C_READ) /= 'Z') then
+				w_o_DATA <= w_BUFFER(w_C_READ);
+				o_ND_OUT	<= '1';
+		end if;
+	end process
+
+	
+	P2S: P2S
+	Generic Map(
+		N_BITS	<= N_BITS
+	)
+	Port Map(
+		i_DATA	=> w_o_DATA,
+		i_ND_OUT	=> w_ND_OUT,
+		i_CLK		=> i_CLK,
+		i_EN		=> i_WR,
+		i_RST		=> i_RST,
+		o_DATA	=>	w_DO 
+	);
+	
+	S2P: S2P
+	Generic Map(
+		N_BITS 	<= N_BITS
+	)
+	Port Map(
+		i_DATA	=> DATA,
+		i_CLK		=> i_CLK,
+		i_EN		=> (NOT) i_WR,
+		o_DATA	=>	o_DATA
+	);
+	
+	
+end rt;

@@ -1,0 +1,58 @@
+library IEEE;
+use IEEE.STD_LOGIC_ARITH.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
+use IEEE.STD_LOGIC_1164.ALL;
+
+entity tb_DECODE_CHANNEL is
+end tb_DECODE_CHANNEL;
+
+
+architecture Behavior of tb_DECODE_CHANNEL is
+
+	component DECODE_CHANNEL is
+		Generic(
+			p_ch_R1	: INTEGER := 16;
+			p_ch_R2	: INTEGER := 32;
+			p_ch_R3	: INTEGER := 48;
+			p_ch_R4	: INTEGER := 64
+		);
+		Port(
+			i_CLK		: in STD_LOGIC;
+			i_RST		: in STD_LOGIC;
+			i_FS		: in STD_LOGIC;
+			o_WR_R1	: out STD_LOGIC;
+			o_WR_R2	: out STD_LOGIC;
+			o_WR_R3	: out STD_LOGIC;
+			o_WR_R4	: out STD_LOGIC
+		);
+	end component;
+
+
+begin
+
+	signal w_CLK	: STD_LOGIC;	
+	signal w_RST	: STD_LOGIC;
+	signal w_FS		: STD_LOGIC;
+	signal w_WR_R1 : STD_LOGIC;
+	signal w_WR_R2 : STD_LOGIC;
+	signal w_WR_R3 : STD_LOGIC;
+	signal w_WR_R4 : STD_LOGIC;
+
+	DC:	DECODE_CHANNEL
+	Generic Map(
+		p_ch_R1	=> 16,
+	   p_ch_R2	=> 32,
+	   p_ch_R3	=> 48,
+	   p_ch_R4	=> 64
+	)
+	Port Map(
+		i_CLK		=> ,
+		i_RST		=> ,
+		i_FS		=> ,
+		o_WR_R1	=> ,
+		o_WR_R2	=> ,
+		o_WR_R3	=> ,
+		o_WR_R4	=>
+	)
+
+end Behavior;

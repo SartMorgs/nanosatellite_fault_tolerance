@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<LOG_ROOT>
+	<PROJECT NAME="NETWORK">
+		<CBX_INST_ENTRY INSTANCE_NAME="|NETWORK|PLL:c_PLL|altpll:altpll_component" CBX_FILE_NAME="PLL_altpll.v"/>
+	</PROJECT>
+</LOG_ROOT>

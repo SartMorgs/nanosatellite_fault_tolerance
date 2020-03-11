@@ -1,0 +1,21 @@
+C:/altera/13.1/projects/NETWORK/tb_FRAME_SYNC.vhd {1 {vcom -work work -2002 -explicit C:/altera/13.1/projects/NETWORK/tb_FRAME_SYNC.vhd
+Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity tb_FRAME_SYNC
+-- Compiling architecture Behavior of tb_FRAME_SYNC
+
+} {} {}} C:/altera/13.1/projects/NETWORK/FRAME_SYNC.vhd {1 {vcom -work work -2002 -explicit C:/altera/13.1/projects/NETWORK/FRAME_SYNC.vhd
+Model Technology ModelSim ALTERA vcom 10.1d Compiler 2012.11 Nov  2 2012
+-- Loading package STANDARD
+-- Loading package TEXTIO
+-- Loading package std_logic_1164
+-- Loading package std_logic_arith
+-- Loading package STD_LOGIC_UNSIGNED
+-- Compiling entity FRAME_SYNC
+-- Compiling architecture fs of FRAME_SYNC
+
+} {} {}}
