@@ -1,1 +1,1 @@
-# Nanosatelite Fault Tolerance
+# Nanosatellite Fault Tolerance
